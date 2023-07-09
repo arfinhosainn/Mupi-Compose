@@ -1,7 +1,7 @@
 package com.arfin.mupicompose.data.remote
 
 import com.arfin.mupicompose.data.dto.MovieInfo
-import com.arfin.mupicompose.data.dto.MovieList
+import com.arfin.mupicompose.data.dto.MovieListDto
 import com.arfin.mupicompose.data.dto.QueryResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -13,7 +13,7 @@ interface MovieService {
     suspend fun getMovieList(
         @Path("list_id") listId: String,
         @Query("api_key") apiKey: String
-    ): MovieList
+    ): MovieListDto
 
     @GET("search/movie")
     suspend fun searchMovie(

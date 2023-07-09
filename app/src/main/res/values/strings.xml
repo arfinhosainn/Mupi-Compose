@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Mupi Compose</string>
+    <string name="register_network_error">Register network error - %s</string>
+
+    <!--    Error Messages (general)-->
+    <string name="error_unknown">Unknown error - %s</string>
+    <string name="available">Available</string>
+    <string name="reserved">Reserved</string>
+    <string name="selected">Selected</string>
+
+
 </resources>

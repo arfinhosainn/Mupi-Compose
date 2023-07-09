@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 data class QueryResponse(
     val page: Int,
     @SerializedName("results")
-    val results: List<Movie>,
+    val results: List<MoviesDto>,
     val total_pages: Int,
     val total_results: Int
 ) {
