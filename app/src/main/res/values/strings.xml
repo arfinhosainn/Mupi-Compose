@@ -7,6 +7,6 @@
     <string name="available">Available</string>
     <string name="reserved">Reserved</string>
     <string name="selected">Selected</string>
-
+    <string name="tickets">tickets</string>
 
 </resources>
