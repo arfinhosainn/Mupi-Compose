@@ -1,26 +1,30 @@
 package com.arfin.mupicompose.presentation.home.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ScaleFactor
+import androidx.compose.ui.layout.lerp
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.arfin.mupicompose.domain.model.Movies
-import com.arfin.mupicompose.presentation.home.HomeScreenState
-import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -33,53 +37,38 @@ fun MoviesCarousel(
     contentPadding: PaddingValues = PaddingValues(0.dp)
 
 ) {
-    val listState = rememberLazyListState()
-    val selectedItemIndex = remember { mutableStateOf(0) }
-    val isFirstElement = remember { mutableStateOf(false) }
-    LaunchedEffect(listState) {
-        snapshotFlow { listState.layoutInfo.visibleItemsInfo }.distinctUntilChanged()
-            .collect { visibleItems ->
-                selectedItemIndex.value = (visibleItems.firstOrNull()?.index ?: -1) + 1
-                isFirstElement.value = (visibleItems.lastOrNull()?.index ?: -1) == 1
-            }
-    }
+    val pagerState = rememberPagerState(initialPage = 2)
+    HorizontalPager(
+        pageCount = movies.size,
+        state = pagerState,
+        contentPadding = PaddingValues(horizontal = (95).dp)
+    ) { page ->
 
-    LazyRow(
-        state = listState,
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = contentPadding,
-        flingBehavior = rememberSnapFlingBehavior(lazyListState = listState),
-        modifier = modifier
-    ) {
-        itemsIndexed(movies) { index, movie ->
-            val isCurrentElement = selectedItemIndex.value == index
+        Column(
+            modifier = Modifier, horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
-            val itemIndex = when {
-                isCurrentElement && !isFirstElement.value -> selectedItemIndex.value
-                isFirstElement.value -> 0
-                else -> selectedItemIndex.value
-            }
+            MovieCard(
+                width = imageWidth,
+                height = imageHeight,
+                imageRes = "https://image.tmdb.org/t/p/w500/${movies[page].poster_path}",
+                onImageClick = {},
+                modifier = Modifier.graphicsLayer {
+                    val pageOffset = (
+                            (pagerState.currentPage - page) + pagerState
+                                .currentPageOffsetFraction
+                            ).absoluteValue
 
-            val scale = when {
-                isCurrentElement && !isFirstElement.value -> 1.1f
-                isFirstElement.value && !isCurrentElement -> 1.1f
-                else -> 1f
-            }
-            Box(
-                modifier = Modifier
-                    .graphicsLayer(
-                        scaleX = scale,
-                        scaleY = scale,
-                    )
-                    .padding(horizontal = 8.dp)
-            ) {
-                MovieCard(
-                    imageRes = "https://image.tmdb.org/t/p/w500/${movie.poster_path}",
-                    width = imageWidth,
-                    height = imageHeight,
-                    onImageClick = navigateMovie
-                )
-            }
+                    lerp(
+                        start = ScaleFactor(1f, 0.80f),
+                        stop = ScaleFactor(1f, 1f),
+                        fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                    ).also { scale ->
+                        scaleX = scale.scaleX
+                        scaleY = scale.scaleY
+                    }
+                }
+            )
         }
     }
 }

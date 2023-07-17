@@ -4,8 +4,11 @@ import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -30,10 +33,7 @@ fun HomeScreen(
         verticalArrangement = Arrangement.Center
     ) {
         HomeContent(moviesData = movies.movies, screenState = movies) {
-
         }
-
-
     }
 
 
@@ -47,21 +47,23 @@ fun HomeContent(
 ) {
 
     val screenWidth = LocalConfiguration.current.screenWidthDp
-    val imageWidth = 264.dp
-    val scaledImageWidth = imageWidth + imageWidth * 0.07f
+    val imageWidth = 178.dp
+    val scaledImageWidth = imageWidth + imageWidth * 0.01f
     val centerCarouselPadding =
         PaddingValues(horizontal = (screenWidth.div(2).dp - scaledImageWidth.div(2)))
 
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        item {
-            MoviesCarousel(
-                imageWidth = imageWidth,
-                imageHeight = 400.dp,
-                movies = moviesData,
-                navigateMovie = navigateMovie
-            )
+    Row(
+        modifier = Modifier.fillMaxSize(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+                MoviesCarousel(
+                    imageWidth = 190.dp,
+                    imageHeight = 270.dp,
+                    movies = moviesData,
+                    navigateMovie = navigateMovie
 
-        }
+                )
+
     }
 
 }
