@@ -7,7 +7,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
 import com.arfin.mupicompose.presentation.home.HomeScreen
+import com.arfin.mupicompose.presentation.navigation.Screen
+import com.arfin.mupicompose.presentation.navigation.SetupNavGraph
 import com.arfin.mupicompose.ui.theme.MupiComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,7 +25,12 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    HomeScreen()
+
+                    val navController = rememberNavController()
+                    SetupNavGraph(
+                        startDestination = Screen.Home.route,
+                        navController = navController
+                    )
                 }
             }
         }
