@@ -91,6 +91,9 @@ dependencies {
     //Compose Foundation
     implementation "androidx.compose.foundation:foundation:1.4.3"
 
+    //google zxing for qrcode
+    implementation "com.google.zxing:core:3.5.1"
+
 
 
 }

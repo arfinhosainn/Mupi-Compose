@@ -26,7 +26,7 @@ import com.arfin.mupicompose.R
 @Composable
 fun HomeHeader() {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 30.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Column(modifier = Modifier.weight(5f)) {
