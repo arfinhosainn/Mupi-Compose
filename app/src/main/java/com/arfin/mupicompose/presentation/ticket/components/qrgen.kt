@@ -84,6 +84,7 @@ fun rememberQrBitmapPainter(
     }
 
     return remember(bitmap) {
+
         val currentBitmap = bitmap ?: Bitmap.createBitmap(
             sizePx, sizePx,
             Bitmap.Config.ARGB_8888,
@@ -98,7 +99,7 @@ fun rememberQrBitmapPainter(
 @Composable
 fun PreviewBarCode() {
     Image(
-        painter = rememberQrBitmapPainter("Successful "),
+        painter = rememberQrBitmapPainter("Success"),
         contentDescription = "DEV Communit Code",
         contentScale = ContentScale.FillBounds,
         modifier = Modifier.size(135.dp),

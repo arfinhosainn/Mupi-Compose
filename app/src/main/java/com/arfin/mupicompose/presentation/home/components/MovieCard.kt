@@ -30,12 +30,17 @@ fun MovieCard(
             .clip(RoundedCornerShape(32.dp))
             .size(width = width, height = height)
             .clickable { onImageClick() }
-            .then(modifier).fillMaxWidth(fraction = 0.85f),
+            .then(modifier)
+            .fillMaxWidth(fraction = 0.85f),
     )
 }
 
 @Preview
 @Composable
 fun MovieCardPreview() {
-    MovieCard(width = 264.dp, height = 400.dp, imageRes = "") {}
+    MovieCard(
+        width = 264.dp, height = 370.dp,
+
+        imageRes = "https://www.vintagemovieposters.co.uk/wp-content/uploads/2021/12/IMG_4475-scaled.jpeg"
+    ) {}
 }

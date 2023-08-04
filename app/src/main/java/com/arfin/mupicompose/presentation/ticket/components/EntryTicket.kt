@@ -1,6 +1,7 @@
 package com.arfin.mupicompose.presentation.ticket.components
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,6 +27,7 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -62,12 +64,10 @@ fun EntryTicket(
                 )
                 onDrawWithContent {
                     clipPath(path) {
-                        // this draws the actual image - if you don't call drawContent, it wont
-                        // render anything
                         this@onDrawWithContent.drawContent()
                     }
                     val dotSize = size.width / 15f
-                    // Clip a white border for the content
+
                     drawCircle(
                         Color.Black,
                         radius = dotSize,
@@ -312,6 +312,12 @@ fun EntryTicket(
             }
             Spacer(modifier = Modifier.height(45.dp))
             DottedLine()
+            Spacer(modifier = Modifier.height(25.dp))
+            Image(
+                painter = painterResource(id = R.drawable.barcode),
+                contentDescription = "barcode"
+            )
+
         }
     }
 }
